@@ -1,9 +1,15 @@
 Debit and Credit Notes on Invoice
 =================================
 
-This module add credit a debit notes on each invoices
+This module adds:
 
-This module add:
+- credit/debit notes on each invoices
+- A new button on invoice to generate credit/debit note
+- *parent_id* field to set principal invoice from which the credit/debit note
 
-- A new button on invoice to generate debit note
-- Parent_id field to set principal invoice from which the credit note
+
+Contributors
+============
+* Vauxoo <http://vauxoo.com>
+* Domenico Stragapede <d.stragapede@elvenstudio.it>
+* Vincenzo Terzulli <v.terzulli@elvenstudio.it>

@@ -24,6 +24,9 @@ import time
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
+import logging
+_log = logging.getLogger(__name__)
+
 
 class AccountInvoiceDebit(osv.TransientModel):
 
@@ -55,14 +58,11 @@ class AccountInvoiceDebit(osv.TransientModel):
         if context is None:
             context = {}
         inv_type = context.get('type', 'out_invoice')
-        company_id = user_obj.browse(
-            cr, uid, uid, context=context).company_id.id
-        type = (inv_type == 'out_invoice') and 'sale_refund' or \
-               (inv_type == 'out_refund') and 'sale' or \
-               (inv_type == 'in_invoice') and 'purchase_refund' or \
-               (inv_type == 'in_refund') and 'purchase'
-        journal = obj_journal.search(cr, uid, [('type', '=', type), (
-            'company_id', '=', company_id)], limit=1, context=context)
+        company_id = user_obj.browse(cr, uid, uid, context=context).company_id.id
+        type = (inv_type == 'out_invoice') and 'sale' or \
+               (inv_type == 'in_invoice') and 'purchase'
+
+        journal = obj_journal.search(cr, uid, [('type', '=', type), ('company_id', '=', company_id)], limit=1, context=context)
         return journal and journal[0] or False
 
     _defaults = {
@@ -191,36 +191,32 @@ class AccountInvoiceDebit(osv.TransientModel):
                     description = inv.name
 
                 if not period:
-                    raise osv.except_osv(_('Insufficient Data!'),
-                                         _('No period found on the invoice.'))
+                    raise osv.except_osv(_('Insufficient Data!'), _('No period found on the invoice.'))
 
                 # we get original data of invoice to create a new invoice that
                 # is the copy of the original
                 invoice = inv_obj.read(cr, uid, [inv.id],
                                        ['name', 'type', 'number', 'reference',
                                         'comment', 'date_due', 'partner_id',
-                                        'partner_insite', 'partner_contact',
-                                        'partner_ref', 'payment_term',
+                                        'payment_term',
                                         'account_id', 'currency_id',
                                         'invoice_line', 'tax_line',
-                                        'journal_id', 'period_id'],
+                                        'journal_id', 'period_id',
+                                        # 'partner_insite', 'partner_contact', 'partner_ref',
+                                        ],
                                        context=context)
                 invoice = invoice[0]
                 del invoice['id']
-                invoice_lines = inv_line_obj.browse(
-                    cr, uid, invoice['invoice_line'], context=context)
-                invoice_lines = inv_obj._refund_cleanup_lines(
-                    cr, uid, invoice_lines, context=context)
-                tax_lines = inv_tax_obj.browse(
-                    cr, uid, invoice['tax_line'], context=context)
-                tax_lines = inv_obj._refund_cleanup_lines(
-                    cr, uid, tax_lines, context=context)
+                invoice_lines = inv_line_obj.browse(cr, uid, invoice['invoice_line'], context=context)
+                invoice_lines = inv_obj._refund_cleanup_lines(cr, uid, invoice_lines.ids, invoice_lines, context=context)
+
+                tax_lines = inv_tax_obj.browse(cr, uid, invoice['tax_line'], context=context)
+                tax_lines = inv_obj._refund_cleanup_lines(cr, uid, tax_lines.ids, tax_lines, context=context)
+
                 # Add origin, parent and comment values
-                orig = self._get_orig(cr, uid, inv, invoice[
-                                      'reference'], context)
+                orig = self._get_orig(cr, uid, inv, invoice['reference'], context)
                 invoice.update({
-                    'type': inv.type == 'in_invoice' and 'in_refund' or
-                    inv.type == 'out_invoice' and 'out_refund',
+                    'type': inv.type,
                     'date_invoice': date,
                     'state': 'draft',
                     'number': False,
@@ -233,22 +229,22 @@ class AccountInvoiceDebit(osv.TransientModel):
                     'comment': form['comment']
                 })
                 # take the id part of the tuple returned for many2one fields
-                for field in ('partner_id', 'account_id', 'currency_id',
-                              'payment_term', 'journal_id'):
+                for field in ('partner_id', 'account_id', 'currency_id', 'payment_term', 'journal_id'):
                     invoice[field] = invoice[field] and invoice[field][0]
+
                 # create the new invoice
                 inv_id = inv_obj.create(cr, uid, invoice, {})
                 # we compute due date
                 if inv.payment_term.id:
-                    data = inv_obj.onchange_payment_term_date_invoice(
-                        cr, uid, [inv_id], inv.payment_term.id, date)
+                    data = inv_obj.onchange_payment_term_date_invoice(cr, uid, [inv_id], inv.payment_term.id, date)
                     if 'value' in data and data['value']:
                         inv_obj.write(cr, uid, [inv_id], data['value'])
                 created_inv.append(inv_id)
+
             # we get the view id
-            xml_id = (inv.type == 'out_refund') and 'action_invoice_tree1' or \
-                     (inv.type == 'in_refund') and 'action_invoice_tree2' or \
-                     (inv.type == 'out_invoice') and 'action_invoice_tree3' or \
+            # xml_id = (inv.type == 'out_refund') and 'action_invoice_tree1' or \
+            #          (inv.type == 'in_refund') and 'action_invoice_tree2' or \
+            xml_id = (inv.type == 'out_invoice') and 'action_invoice_tree3' or \
                      (inv.type == 'in_invoice') and 'action_invoice_tree4'
             # we get the model
             result = mod_obj.get_object_reference(cr, uid, 'account', xml_id)
@@ -259,6 +255,7 @@ class AccountInvoiceDebit(osv.TransientModel):
             invoice_domain = eval(result['domain'])
             invoice_domain.append(('id', 'in', created_inv))
             result['domain'] = invoice_domain
+            _log.warning(invoice_domain)
             return result
 
     def invoice_debit(self, cr, uid, ids, context=None):

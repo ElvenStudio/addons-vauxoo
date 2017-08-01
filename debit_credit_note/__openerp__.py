@@ -36,18 +36,24 @@
     "license": "",
     "depends": [
         "base",
-        "account"
+        "account",
+        # "l10n_ve_fiscal_requirements"  # //TODO trovato nel codice riferimento, verificiare se è necessario
     ],
+
     "demo": [],
     "data": [
         "wizard/account_invoice_debit_view.xml",
         "wizard/account_invoice_parent_view.xml",
-        "account_invoice_view.xml"
+
+        "views/account_invoice_view.xml",
+        "views/menu.xml"
     ],
+
     "test": [],
     "js": [],
     "css": [],
     "qweb": [],
+
     "installable": True,
     "auto_install": False,
 }

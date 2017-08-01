@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <!-- Menu item-->
+
+        <menuitem action="action_customer_debit_note"
+                  id="menu_action_customer_debit_note"
+                  parent="account.menu_finance_receivables"
+                  groups="account.group_account_invoice"
+                  sequence="11" />
+
+        <menuitem action="action_supplier_debit_note"
+                  id="menu_action_supplier_debit_note"
+                  parent="account.menu_finance_payables"
+                  groups="account.group_account_invoice"
+                  sequence="11" />
+    </data>
+</openerp>
