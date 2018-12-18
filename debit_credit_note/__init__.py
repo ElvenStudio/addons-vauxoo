@@ -29,5 +29,5 @@
 ##############################################################################
 
 
-from . import invoice
+from . import models
 from . import wizard

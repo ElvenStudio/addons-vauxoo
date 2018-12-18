@@ -24,6 +24,8 @@
 
 from openerp.osv import osv, fields
 import openerp.addons.decimal_precision as dp
+# import logging
+# _log = logging.getLogger(__name__)
 
 
 class PurchaseOrderLine(osv.osv):
@@ -74,11 +76,11 @@ class PurchaseOrderLine(osv.osv):
                     continue
             if src == dst:
                 continue
-            elif dst == 'internal':
+            elif src == 'supplier' and (dst == 'internal' or dst == 'transit'):
                 qty = uom_obj._compute_qty_obj(cr, uid, sm_uom_id,
                                                sm_brw.product_qty, pol_uom_id,
                                                context=context)
-            elif src == 'internal':
+            elif src == 'internal' and (dst == 'supplier' or dst == 'transit'):
                 qty = -uom_obj._compute_qty_obj(cr, uid, sm_uom_id,
                                                 sm_brw.product_qty, pol_uom_id,
                                                 context=context)

@@ -20,121 +20,121 @@ msgstr ""
 #: code:addons/debit_credit_note/wizard/account_invoice_refund.py:108
 #, python-format
 msgid "- DATE:"
-msgstr ""
+msgstr "- DEL:"
 
 #. module: debit_credit_note
 #: view:account.invoice:debit_credit_note.account_inv_ext_form_crdrs
 msgid "A debit note from accounting and fiscal point of view is exactly as an invoice but with a parent invoice related. Debit note will increase the payable and receivable exactly as an invoice."
-msgstr ""
+msgstr "Da un punto di vista contabile e fiscale, una Nota Debito e esattamente una fattura ma con una fattura padre collegata. Una Nota Debito aumenterà il debito (nota debito fornitore) e il credito (nota debito cliente) esattamente come una fattura."
 
 #. module: debit_credit_note
 #: field:account.invoice.parent,sure:0
 msgid "Are you sure?"
-msgstr ""
+msgstr "Sei sicuro?"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_parent.py:96
 #, python-format
 msgid "Assign"
-msgstr ""
+msgstr "Assegna"
 
 #. module: debit_credit_note
 #: model:ir.actions.act_window,name:debit_credit_note.action_acc_inv_parent_assigned
 #: model:ir.actions.act_window,name:debit_credit_note.action_account_invoice_parent
 msgid "Assign Parent"
-msgstr ""
+msgstr "Assegna fattura correlata"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_parent.py:141
 #, python-format
 msgid "Assign parent invoice, Please check the box to confirm that you agree!"
-msgstr ""
+msgstr "Assegna fattura correlata. Spunta per procedere!"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_debit.py:145
 #, python-format
 msgid "Can not create a debit note from draft/proforma/cancel invoice."
-msgstr ""
+msgstr "Non si può creare una nota debito da una fattura bozza/proforma/annullata."
 
 #. module: debit_credit_note
 #: view:account.invoice.debit:debit_credit_note.view_account_invoice_debit
 #: view:account.invoice.parent:debit_credit_note.view_account_invoice_parent
 msgid "Cancel"
-msgstr ""
+msgstr "Annulla"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_refund.py:145
 #, python-format
 msgid "Cannot %s draft/proforma/cancel invoice."
-msgstr ""
+msgstr "Non si può %s una fattura bozza/proforma/annullata."
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_debit.py:149
 #: code:addons/debit_credit_note/wizard/account_invoice_refund.py:148
 #, python-format
 msgid "Cannot %s invoice which is already reconciled, invoice should be unreconciled first. You can only refund this invoice."
-msgstr ""
+msgstr "Non si può %s una fattura già riconciliata, annullare prima la riconciliazione se si vuole procedere. Oppure puoi creare nota credito di questa fattura."
 
 #. module: debit_credit_note
 #: selection:account.invoice.parent,type:0
 msgid "Change source invoice"
-msgstr ""
+msgstr "Cambia la fattura sorgente"
 
 #. module: debit_credit_note
 #: field:account.invoice.debit,comment:0
 msgid "Comment"
-msgstr ""
+msgstr "Commento"
 
 #. module: debit_credit_note
 #: view:account.invoice:debit_credit_note.account_inv_ext_form_crdrs
 msgid "Create a Refund to pay this invoice, remember validate it this wizard only will relate both invoices."
-msgstr ""
+msgstr "Crea una nota credito per pagare questa fattura. NB: questa proceura collega solo le due fattura."
 
 #. module: debit_credit_note
 #: field:account.invoice.debit,create_uid:0
 #: field:account.invoice.parent,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: debit_credit_note
 #: field:account.invoice.debit,create_date:0
 #: field:account.invoice.parent,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_parent.py:179
 #, python-format
 msgid "Credit or debit note assign, This credit or debit note already assign to an invoice!"
-msgstr ""
+msgstr "Questa nota credito/debito risulta già correlata ad una fattura!"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_parent.py:151
 #, python-format
 msgid "Current invoice is the same father invoice, Credit or debit note have to be diferent of parent invoice, Please choise another one!"
-msgstr ""
+msgstr "La fattura corrente risulta correlata a se stessa. Seleziona un'altra fattura!"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_parent.py:70
 #, python-format
 msgid "Customer"
-msgstr ""
+msgstr "Cliente"
 
 #. module: debit_credit_note
 #: model:ir.actions.act_window,name:debit_credit_note.action_customer_debit_note
 #: model:ir.ui.menu,name:debit_credit_note.menu_action_customer_debit_note
 msgid "Customer debit notes"
-msgstr ""
+msgstr "Note debito cliente"
 
 #. module: debit_credit_note
 #: help:account.invoice.parent,partner_id:0
 msgid "Customer or supplier who owns the invoice"
-msgstr ""
+msgstr "Cliente o fornitore a cui appartiene la fattura"
 
 #. module: debit_credit_note
 #: view:account.invoice.debit:debit_credit_note.view_account_invoice_debit
 msgid "Debit Invoice: Creates the debit note invoice, ready for editing."
-msgstr ""
+msgstr "Fattura di debito: Crea una nota debito, pronta per essere modificata."
 
 #. module: debit_credit_note
 #: view:account.invoice:debit_credit_note.account_inv_ext_form_crdrs
@@ -143,58 +143,58 @@ msgstr ""
 #: view:account.invoice.parent:debit_credit_note.view_account_invoice_parent
 #: model:ir.actions.act_window,name:debit_credit_note.action_account_invoice_debit
 msgid "Debit Note"
-msgstr ""
+msgstr "Nota Debito"
 
 #. module: debit_credit_note
 #: view:account.invoice.debit:debit_credit_note.view_account_invoice_debit
 #: view:account.invoice.parent:debit_credit_note.view_account_invoice_parent
 msgid "Debit Note Options"
-msgstr ""
+msgstr "Opzioni Note Debito"
 
 #. module: debit_credit_note
 #: field:account.invoice,child_ids:0
 msgid "Debit and Credit Notes"
-msgstr ""
+msgstr "Note Credito e Debito"
 
 #. module: debit_credit_note
 #: view:account.invoice:debit_credit_note.account_inv_ext_view_form_crdr
 msgid "Debit note"
-msgstr ""
+msgstr "Nota debito"
 
 #. module: debit_credit_note
 #: view:account.invoice:debit_credit_note.account_inv_ext_form_crdrs
 #: view:account.invoice:debit_credit_note.account_inv_ext_view_form_crdr
 msgid "Debit-Credit Notes"
-msgstr ""
+msgstr "Note Credito e Debito"
 
 #. module: debit_credit_note
 #: field:account.invoice.debit,description:0
 msgid "Description"
-msgstr ""
+msgstr "Descrizione"
 
 #. module: debit_credit_note
 #: field:account.invoice.debit,display_name:0
 #: field:account.invoice.parent,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: debit_credit_note
 #: view:account.invoice:debit_credit_note.account_inv_ext_form_crdrs
 #: view:account.invoice:debit_credit_note.account_inv_ext_view_form_crdr
 msgid "Draft Debit Note"
-msgstr ""
+msgstr "Nota Debito BOZZA"
 
 #. module: debit_credit_note
 #: view:account.invoice:debit_credit_note.account_inv_ext_form_crdrs
 #: view:account.invoice:debit_credit_note.account_inv_ext_view_form_crdr
 msgid "Draft Invoice"
-msgstr ""
+msgstr "Fattura in bozza"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_debit.py:145
 #, python-format
 msgid "Error !"
-msgstr ""
+msgstr "Errore!"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_debit.py:149
@@ -202,179 +202,180 @@ msgstr ""
 #: code:addons/debit_credit_note/wizard/account_invoice_refund.py:148
 #, python-format
 msgid "Error!"
-msgstr ""
+msgstr "Errore!"
 
 #. module: debit_credit_note
 #: field:account.invoice.debit,period:0
 msgid "Force period"
-msgstr ""
+msgstr "Forza periodo"
 
 #. module: debit_credit_note
 #: field:account.invoice.debit,id:0
 #: field:account.invoice.parent,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_refund.py:108
 #, python-format
 msgid "INV REFUND:"
-msgstr ""
+msgstr "N.C.:"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_debit.py:114
 #, python-format
 msgid "INV:"
-msgstr ""
+msgstr "FATT:"
 
 #. module: debit_credit_note
 #: view:account.invoice:debit_credit_note.account_inv_ext_form_crdrs
 msgid "If you want re-assign a parent invoice and avoid do this repeating all the process this is the button to do that, reasing securely a parent invoice to a debit note or a credit note."
-msgstr ""
+msgstr "Se vuoi riassegnare una fattura correlata ed evitare di rieseguire tutto il processo, questo è il bottone per farlo. Riassegna con sicurezza una fattura correlata ad una nota credito/debito."
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_parent.py:162
 #, python-format
 msgid "Incorrect Parent Invoice, The parent invoice selected can not have an assigned parent invoice!"
-msgstr ""
+msgstr "La fattura correlata non può avere una ulteriore fattura correlata!"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_debit.py:194
 #: code:addons/debit_credit_note/wizard/account_invoice_refund.py:190
 #, python-format
 msgid "Insufficient Data!"
-msgstr ""
+msgstr "Dati non completi!"
 
 #. module: debit_credit_note
 #: view:account.invoice:debit_credit_note.account_inv_ext_form_crdrs
 #: view:account.invoice:debit_credit_note.account_inv_ext_view_form_crdr
 #: model:ir.model,name:debit_credit_note.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Fattura"
 
 #. module: debit_credit_note
 #: model:ir.model,name:debit_credit_note.model_account_invoice_debit
 msgid "Invoice Debit Note"
-msgstr ""
+msgstr "Nota Debito"
 
 #. module: debit_credit_note
 #: model:ir.model,name:debit_credit_note.model_account_invoice_refund
 msgid "Invoice Refund"
-msgstr ""
+msgstr "Nota di Credito"
 
 #. module: debit_credit_note
 #: field:account.invoice.debit,__last_update:0
 #: field:account.invoice.parent,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: debit_credit_note
 #: field:account.invoice.debit,write_uid:0
 #: field:account.invoice.parent,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima modifica di"
 
 #. module: debit_credit_note
 #: field:account.invoice.debit,write_date:0
 #: field:account.invoice.parent,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_parent.py:100
 #, python-format
 msgid "Modify"
-msgstr ""
+msgstr "Modifica"
 
 #. module: debit_credit_note
 #: view:account.invoice.parent:debit_credit_note.view_account_invoice_parent
 #: code:addons/debit_credit_note/wizard/account_invoice_parent.py:94
 #, python-format
 msgid "Next"
-msgstr ""
+msgstr "Successiva"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_debit.py:194
 #: code:addons/debit_credit_note/wizard/account_invoice_refund.py:190
 #, python-format
 msgid "No period found on the invoice."
-msgstr ""
+msgstr "Periodo non impostato nella fattura."
 
 #. module: debit_credit_note
 #: field:account.invoice.parent,type:0
 msgid "Operation Type"
-msgstr ""
+msgstr "Tipo operazione"
 
 #. module: debit_credit_note
 #: field:account.invoice.debit,date:0
 msgid "Operation date"
-msgstr ""
+msgstr "Data operazione"
 
 #. module: debit_credit_note
 #: help:account.invoice.parent,type:0
 msgid "Operation to make on the refund invoice or debit credit note.\n"
 "Change source invoice: Modify the current parent invoice of the current invoice."
-msgstr ""
+msgstr "Operazione di creazione di una nota credito/debito.\n"
+"Modifica la fattura sorgente della fattura corrente."
 
 #. module: debit_credit_note
 #: view:account.invoice:debit_credit_note.account_inv_ext_form_crdrs
 #: field:account.invoice,parent_id:0
 #: model:ir.model,name:debit_credit_note.model_account_invoice_parent
 msgid "Parent Invoice"
-msgstr ""
+msgstr "Fattura correlata"
 
 #. module: debit_credit_note
 #: field:account.invoice.parent,partner_id:0
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #. module: debit_credit_note
 #: view:account.invoice:debit_credit_note.account_inv_ext_form_crdrs
 msgid "Refund Invoice"
-msgstr ""
+msgstr "Nota di Credito"
 
 #. module: debit_credit_note
 #: field:account.invoice.debit,journal_id:0
 msgid "Refund Journal"
-msgstr ""
+msgstr "Giornale di storno"
 
 #. module: debit_credit_note
 #: field:account.invoice.parent,parent_id:0
 msgid "Source Invoice"
-msgstr ""
+msgstr "Fattura sorgente"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_parent.py:72
 #, python-format
 msgid "Supplier"
-msgstr ""
+msgstr "Fornitore"
 
 #. module: debit_credit_note
 #: model:ir.actions.act_window,name:debit_credit_note.action_supplier_debit_note
 #: model:ir.ui.menu,name:debit_credit_note.menu_action_supplier_debit_note
 msgid "Supplier debit notes"
-msgstr ""
+msgstr "Note Debito fornitore"
 
 #. module: debit_credit_note
 #: help:account.invoice,child_ids:0
 msgid "These are all credit and debit to this invoice"
-msgstr ""
+msgstr "Note credito e debito di questa fattura"
 
 #. module: debit_credit_note
 #: help:account.invoice.debit,date:0
 msgid "This date will be used as the invoice date for Refund Invoice and Period will be chosen accordingly!"
-msgstr ""
+msgstr "Questa data sarà usata come data della nota credito e il periodo verrà automaticamente impostato!"
 
 #. module: debit_credit_note
 #: help:account.invoice,parent_id:0
 msgid "This is the main invoice that has generated this credit note"
-msgstr ""
+msgstr "La fattura principale che ha generato questa nota credito"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_parent.py:98
 #, python-format
 msgid "Unlink"
-msgstr ""
+msgstr "Scollega"
 
 #. module: debit_credit_note
 #: code:addons/debit_credit_note/wizard/account_invoice_parent.py:141
@@ -383,15 +384,15 @@ msgstr ""
 #: code:addons/debit_credit_note/wizard/account_invoice_parent.py:179
 #, python-format
 msgid "User Error"
-msgstr ""
+msgstr "Errore utente"
 
 #. module: debit_credit_note
 #: help:account.invoice.debit,journal_id:0
 msgid "You can select here the journal to use for the refund invoice that will be created. If you leave that field empty, it will use the same journal as the current invoice."
-msgstr ""
+msgstr "Puoi selezionare il giornale da usare per la nota credito che verrà creata. Se lasci il campo vuoto, verrà utilizzato lo stesso giornale della fattura corrente."
 
 #. module: debit_credit_note
 #: help:account.invoice.parent,parent_id:0
 msgid "You can select here the source invoice to use as father as the current invoice."
-msgstr ""
+msgstr "Puoi impostare qui la fattura sorgente da utilizzare come correlata alla fattura corrente."
 

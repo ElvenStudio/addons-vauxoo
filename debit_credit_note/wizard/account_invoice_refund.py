@@ -24,8 +24,8 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 # Commented due to migration process, please when this module is migrated to v8
 # to ensure the functionaliity is working bring alive this import.
-# import workflow
-
+# import workflow
+from openerp import netsvc
 
 class AccountInvoiceRefund(osv.osv_memory):
 
@@ -50,22 +50,27 @@ class AccountInvoiceRefund(osv.osv_memory):
 
     def fields_view_get(self, cr, uid, view_id=None, view_type=False,
                         context=None, toolbar=False, submenu=False):
+
         if context is None:
-            context = {}
+            my_context = {}
+        else:
+            my_context = context.copy()
+
         journal_obj = self.pool.get('account.journal')
         user_obj = self.pool.get('res.users')
         # remove the entry with key 'form_view_ref', otherwise fields_view_get
         # crashes
-        context.pop('form_view_ref', None)
+
+        my_context.pop('form_view_ref', None)
         res = super(AccountInvoiceRefund, self).\
             fields_view_get(cr, uid,
                             view_id=view_id,
                             view_type=view_type,
-                            context=context,
+                            context=my_context,
                             toolbar=toolbar, submenu=submenu)
-        type = context.get('type', 'out_invoice')
+        type = my_context.get('type', 'out_invoice')
         company_id = user_obj.browse(
-            cr, uid, uid, context=context).company_id.id
+            cr, uid, uid, context=my_context).company_id.id
         journal_type = (type == 'out_invoice') and 'sale_refund' or \
                        (type == 'out_refund') and 'sale' or \
                        (type == 'in_invoice') and 'purchase_refund' or \
@@ -78,7 +83,7 @@ class AccountInvoiceRefund(osv.osv_memory):
                                                            ('company_id',
                                                                'child_of',
                                                                [company_id])],
-                                                          context=context)
+                                                          context=my_context)
                 res['fields'][field]['selection'] = journal_select
         return res
 
@@ -116,10 +121,13 @@ class AccountInvoiceRefund(osv.osv_memory):
         account_m_line_obj = self.pool.get('account.move.line')
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
-        wf_service = workflow
         inv_tax_obj = self.pool.get('account.invoice.tax')
         inv_line_obj = self.pool.get('account.invoice.line')
         res_users_obj = self.pool.get('res.users')
+
+        # wf_service = workflow
+        wf_service = netsvc.LocalService('workflow')
+
         if context is None:
             context = {}
 
@@ -179,8 +187,7 @@ class AccountInvoiceRefund(osv.osv_memory):
                     description = inv.name
 
                 if not period:
-                    raise osv.except_osv(_('Insufficient Data!'),
-                                         _('No period found on the invoice.'))
+                    raise osv.except_osv(_('Insufficient Data!'), _('No period found on the invoice.'))
 
                 refund_id = inv_obj.refund(cr, uid, [
                                            inv.id], date, period,
@@ -203,10 +210,8 @@ class AccountInvoiceRefund(osv.osv_memory):
                             to_reconcile_ids[line.account_id.id] = [line.id]
                         if type(line.reconcile_id) != osv.orm.browse_null:
                             reconcile_obj.unlink(cr, uid, line.reconcile_id.id)
-                    wf_service.trg_validate(uid, 'account.invoice',
-                                            refund.id, 'invoice_open', cr)
-                    refund = inv_obj.browse(
-                        cr, uid, refund_id[0], context=context)
+                    wf_service.trg_validate(uid, 'account.invoice', refund.id, 'invoice_open', cr)
+                    refund = inv_obj.browse(cr, uid, refund_id[0], context=context)
                     for tmpline in refund.move_id.line_id:
                         if tmpline.account_id.id == inv.account_id.id:
                             to_reconcile_ids[

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <!-- 
+    =====================================================
+    Invoices Extension
+    =====================================================
+    -->  
+
+        <record id="account_inv_ext_view_form_crdr" model="ir.ui.view">
+            <field name="name">invoice_extended.form.crdr</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+
+                <label string="Draft Invoice" position="replace">
+                    <label string="Draft Invoice" attrs="{'invisible': ['|', '|', ('state','not in',('draft',)), ('type','!=','out_invoice'), ('parent_id', '!=', False)]}"/>
+                    <label string="Draft Debit Note" attrs="{'invisible': ['|', '|', ('state','not in',('draft',)), ('type','!=','out_invoice'), ('parent_id', '=', False)]}"/>
+                </label>
+
+                <label string="Invoice" position="replace">
+                    <label string="Invoice" attrs="{'invisible': ['|', '|', ('state','in',('draft','proforma','proforma2')), ('type','!=','out_invoice'), ('parent_id', '!=', False)]}"/>
+                    <label string="Debit note" attrs="{'invisible': ['|', '|', ('state','in',('draft','proforma','proforma2')), ('type','!=','out_invoice'), ('parent_id', '=', False)]}"/>
+                </label>
+
+                <notebook position="inside">
+					<page string="Debit-Credit Notes" attrs="{'invisible':['|','|', ('type','=','in_refund'), ('type','=','out_refund'), ('parent_id','!=',False)]}" >
+                        <field name="child_ids"
+                               nolabel="1"
+                               widget="many2many"
+                               domain="[('partner_id','=',partner_id),('id', '!=', active_id),('type','in',['out_invoice', 'out_refund'])]"
+                        />
+                    </page>
+                </notebook>
+
+                <xpath expr="//field[@name='period_id']" position="after">
+                    <field name="parent_id" domain="[('partner_id', '=', partner_id), ('id', '!=', active_id), ('type', 'in', ['out_invoice', 'out_refund'])]"/>
+                </xpath>
+
+                <xpath expr="//button[@string='Refund Invoice']" position="after">
+                    <button name="%(action_account_invoice_debit)d"
+                            type='action'
+                            string='Debit Note'
+                            attrs="{'invisible': ['|', '|', ('type', 'in', ('in_refund', 'out_refund')), ('state', '=', 'draft'), ('parent_id', '!=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_inv_ext_view_tree_crdr" model="ir.ui.view">
+            <field name="name">invoice_extended.tree.crdr</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="parent_id"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="account_inv_ext_form_crdrs" model="ir.ui.view">
+            <field name="name">invoice_ext.supplier.form.crdr</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+
+                <label string="Draft Invoice" position="replace">
+                    <label string="Draft Invoice" attrs="{'invisible': ['|', '|', ('state','!=','draft'), ('type','!=','in_invoice'), ('parent_id', '!=', False)]}"/>
+                    <label string="Draft Debit Note" attrs="{'invisible': ['|', '|', ('state','!=','draft'), ('type','!=','in_invoice'), ('parent_id', '=', False)]}"/>
+                </label>
+
+                <label string="Invoice" position="replace">
+                    <label string="Invoice" attrs="{'invisible': ['|', '|', ('state', '=', 'draft'), ('type','!=','in_invoice'), ('parent_id', '!=', False)]}"/>
+                    <label string="Debit Note" attrs="{'invisible': ['|', '|', ('state', '=', 'draft'), ('type','!=','in_invoice'), ('parent_id', '=', False)]}"/>
+                </label>
+
+
+                <xpath expr="//field[@name='period_id']" position="after">
+                    <field name="parent_id" domain="[('partner_id','=',partner_id),('id', '!=', active_id),('type','in',['in_invoice', 'in_refund'])]"/>
+                </xpath>
+                <xpath expr="//button[@string='Ask Refund']" position="replace">
+                    <button name="%(account.action_account_invoice_refund)d"
+                            type="action"
+                            string="Refund Invoice" states="open,paid"
+                            help="Create a Refund to pay this invoice, remember validate it this wizard only will relate both invoices."/>
+                </xpath>
+                <xpath expr="//button[@string='Refund Invoice']" position="after">
+                    <button name="%(action_account_invoice_debit)d" 
+                            type='action'
+                            string='Debit Note'
+                            attrs="{'invisible':['|', '|', ('state','in',['proforma2','proforma','cancel', 'draft']), ('type','in',['out_refund', 'in_refund']), ('parent_id', '!=', False)]}"
+						    help="A debit note from accounting and fiscal point of view is exactly as an invoice but with a parent invoice related. Debit note will increase the payable and receivable exactly as an invoice." />
+                </xpath>
+
+				<xpath expr="//page[@string='Payments']" position="after">
+                    <page string="Debit-Credit Notes" attrs="{'invisible':['|','|',('type','=','in_refund'),('type','=','out_refund'),('parent_id','!=',False)]}" position="inside">
+                        <field name="child_ids" nolabel="1" widget="many2many" domain="[('partner_id','=',partner_id),('id', '!=', active_id),('type','in',['in_invoice', 'in_refund'])]"/>
+                    </page>
+                </xpath>
+
+
+                <xpath expr="//button[@string='Refund Invoice']" position="after">
+                    <button name="%(action_account_invoice_parent)d"
+                            type="action"
+                            string="Parent Invoice"
+                            states="open,paid"
+                            attrs="{'invisible':[('type','!=','in_refund')]}"
+						    help="If you want re-assign a parent invoice and avoid do this repeating all the process this is the button to do that, reasing securely a parent invoice to a debit note or a credit note."/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <!-- ************* Supplier Debit note actions  *************** -->
+        <record id="action_supplier_debit_note" model="ir.actions.act_window">
+            <field name="name">Supplier debit notes</field>
+            <field name="res_model">account.invoice</field>
+            <field name="domain">[('type','=','in_invoice'), ('parent_id', '!=', False)]</field>
+            <!--<field name="context">{'act_window_id': 265, 'journal_type': 'purchase', 'search_default_invoices': 1, 'type': 'in_invoice', 'default_type': 'in_invoice'}</field>-->
+            <field name="context">{'journal_type': 'purchase', 'search_default_invoices': 1, 'type': 'in_invoice', 'default_type': 'in_invoice'}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="view_id" ref="account.invoice_supplier_form" />
+            <field name="search_view_id" ref="account.view_account_invoice_filter" />
+        </record>
+        <record id="action_supplier_debit_note_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="account.invoice_tree" />
+            <field name="act_window_id" ref="action_supplier_debit_note" />
+        </record>
+
+        <!-- ************* Customer Debit note actions  *************** -->
+        <record id="action_customer_debit_note" model="ir.actions.act_window">
+            <field name="name">Customer debit notes</field>
+            <field name="res_model">account.invoice</field>
+            <field name="domain">[('type','=','out_invoice'), ('parent_id', '!=', False)]</field>
+            <!--<field name="context">{'act_window_id': 264, 'journal_type': 'sale', 'search_default_invoices': 1, 'type': 'out_invoice', 'default_type': 'out_invoice'}</field>-->
+            <field name="context">{'journal_type': 'sale', 'search_default_invoices': 1, 'type': 'out_invoice', 'default_type': 'out_invoice'}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="view_id" ref="account.invoice_form" />
+            <field name="search_view_id" ref="account.view_account_invoice_filter" />
+        </record>
+        <record id="action_customer_debit_note_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="account.invoice_tree" />
+            <field name="act_window_id" ref="action_customer_debit_note" />
+        </record>
+    </data>
+</openerp>
