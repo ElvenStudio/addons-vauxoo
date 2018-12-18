@@ -39,16 +39,15 @@ class SaleOrderLine(osv.osv):
 
         for ail_brw in sol_brw.invoice_lines:
             ail_uom_id = ail_brw.uos_id
-            if ail_brw.invoice_id.state not in ('open', 'done'):
+            if ail_brw.invoice_id.state not in ('open', 'paid'):
                 continue
             if all([context.get('date_start'), context.get('date_stop')]):
                 ai_brw = ail_brw.invoice_id
-                if not (ai_brw.date_invoice >= context['date_start'] and
-                        ai_brw.date_invoice <= context['date_stop']):
+                if not (context['date_start'] <= ai_brw.date_invoice <= context['date_stop']):
                     continue
-            res += uom_obj._compute_qty_obj(cr, uid, ail_uom_id,
-                                            ail_brw.quantity, sol_uom_id,
-                                            context=context)
+            res += uom_obj._compute_qty_obj(
+                cr, uid, ail_uom_id,
+                ail_brw.quantity, sol_uom_id, context=context)
 
         return res
 
